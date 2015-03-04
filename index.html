@@ -1,0 +1,690 @@
+<!doctype html>
+
+<!--
+
+    Welcome to the light side of the source, young padawan.
+
+    One step closer to learn something interesting you are...
+
+                               ____                  
+                            _.' :  `._               
+                        .-.'`.  ;   .'`.-.           
+               __      / : ___\ ;  /___ ; \      __  
+             ,'_ ""=-.:__;".-.";: :".-.":__;.-="" _`,
+             :' `.t""=-.. '<@.`;_  ',@:` ..-=""j.' `;
+                  `:-.._J '-.-'L__ `-.-' L_..-;'     
+                    "-.__ ;  .-"  "-.  : __.-"       
+                        L ' /.======.\ ' J           
+                         "-.   "__"   .-"            
+                        __.l"-:_JL_;-";.__           
+                     .-j/'.;  ;""""  / .'\"-.        
+                   .' /:`. "-.:     .-" .';  `.      
+                .-"  / ;  "-. "-..-" .-"  :    "-.   
+             .+"-.  : :      "-.__.-"      ;-._   \  
+             ; \  `.; ;                    : : "+. ; 
+             :  ;   ; ;                    : ;  : \: 
+             ;  :   ; :                    ;:   ;  : 
+            : \  ;  :  ;                  : ;  /  :: 
+            ;  ; :   ; :                  ;   :   ;: 
+            :  :  ;  :  ;                : :  ;  : ; 
+            ;\    :   ; :                ; ;     ; ; 
+            : `."-;   :  ;              :  ;    /  ; 
+             ;    -:   ; :              ;  : .-"   : 
+             :\     \  :  ;            : \.-"      : 
+              ;`.    \  ; :            ;.'_..-=  / ; 
+              :  "-.  "-:  ;          :/."      .'  :
+               \         \ :          ;/  __        :
+                \       .-`.\        /t-""  ":-+.   :
+                 `.  .-"    `l    __/ /`. :  ; ; \  ;
+                   \   .-" .-"-.-"  .' .'j \  /   ;/ 
+                    \ / .-"   /.     .'.' ;_:'    ;  
+                     :-""-.`./-.'     /    `.___.'   
+                           \ `t  ._  /               
+                            "-.t-._:'                
+
+-->
+
+<!--
+    
+    So you'd like to know how to use impress.js?
+    
+    You've made the first, very important step - you're reading the source code.
+    And that's how impress.js presentations are built - with HTML and CSS code.
+    
+    Believe me, you need quite decent HTML and CSS skills to be able to use impress.js effectively.
+    More importantly, you need to be a designer. There are no default styles or layouts for impress.js presentations.
+    
+    You need to design and build it by hand.
+    
+    So...
+    
+    Would you still like to know how to use impress.js?
+    
+-->
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>impress.js | presentation tool based on the power of CSS3 transforms and transitions in modern browsers | by Bartek Szopka @bartaz</title>
+
+    <meta name="description" content="impress.js is a presentation tool based on the power of CSS3 transforms and transitions in modern browsers and inspired by the idea behind prezi.com." />
+    <meta name="author" content="Bartek Szopka" />
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+    <link rel="stylesheet" href="css/font-awesome.css"/>
+    <!--
+        
+        Impress.js doesn't depend on any external stylesheets. It adds all of the styles it needs for the
+        presentation to work.
+        
+        This style below contains styles only for demo presentation. Browse it to see how impress.js
+        classes are used to style presentation steps, or how to apply fallback styles, but I don't want
+        you to use them directly in your presentation.
+        
+        Be creative, build your own. We don't really want all impress.js presentations to look the same,
+        do we?
+        
+        When creating your own presentation get rid of this file. Start from scratch, it's fun!
+        
+    -->
+    <link href="css/impress-demo.css" rel="stylesheet" />
+
+    <link rel="shortcut icon" href="favicon.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+</head>
+
+<!--
+    
+    Body element is used by impress.js to set some useful class names, that will allow you to detect
+    the support and state of the presentation in CSS or other scripts.
+    
+    First very useful class name is `impress-not-supported`. This class means, that browser doesn't
+    support features required by impress.js, so you should apply some fallback styles in your CSS.
+    It's not necessary to add it manually on this element. If the script detects that browser is not
+    good enough it will add this class, but keeping it in HTML means that users without JavaScript
+    will also get fallback styles.
+    
+    When impress.js script detects that browser supports all required features, this class name will
+    be removed.
+    
+    The class name on body element also depends on currently active presentation step. More details about
+    it can be found later, when `hint` element is being described.
+    
+-->
+<body class="impress-not-supported">
+
+<!--
+    For example this fallback message is only visible when there is `impress-not-supported` class on body.
+-->
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<!--
+    
+    Now that's the core element used by impress.js.
+    
+    That's the wrapper for your presentation steps. In this element all the impress.js magic happens.
+    It doesn't have to be a `<div>`. Only `id` is important here as that's how the script find it.
+    
+    You probably won't need it now, but there are some configuration options that can be set on this element.
+    
+    To change the duration of the transition between slides use `data-transition-duration="2000"` giving it
+    a number of ms. It defaults to 1000 (1s).
+    
+    You can also control the perspective with `data-perspective="500"` giving it a number of pixels.
+    It defaults to 1000. You can set it to 0 if you don't want any 3D effects.
+    If you are willing to change this value make sure you understand how CSS perspective works:
+    https://developer.mozilla.org/en/CSS/perspective
+    
+    But as I said, you won't need it for now, so don't worry - there are some simple but interesting things
+    right around the corner of this tag ;)
+    
+-->
+<div id="impress">
+
+<!--
+
+    Here is where interesting thing start to happen.
+
+    Each step of the presentation should be an element inside the `#impress` with a class name
+    of `step`. These step elements are positioned, rotated and scaled by impress.js, and
+    the 'camera' shows them on each step of the presentation.
+
+    Positioning information is passed through data attributes.
+
+    In the example below we only specify x and y position of the step element with `data-x="-1000"`
+    and `data-y="-1500` attributes. This means that **the center** of the element (yes, the center)
+    will be positioned in point x = -1000px and y = -1500px of the presentation 'canvas'.
+
+    It will not be rotated or scaled.
+
+-->
+<div id="intro" class="step slide" data-x="-1000" data-y="-1500">
+    <img src="logo.png" alt="logo_drf"/>
+
+    <p class="subtitulo">Django <b class="red">REST</b> framework es una poderosa herramienta que te hace fácil construir APIs para la Web.</p>
+
+    <p class="presentador">Luis Moncaris Gonzalez</p>
+    <br/>
+    <p class="presentador"><span class="django">Django</span> developer</p>
+    <img class="presentador_imagen" src="img/luis.png" alt=""/>
+
+</div>
+
+<!--
+
+    The `id` attribute of the step element is used to identify it in the URL, but it's optional.
+    If it is not defined, it will get a default value of `step-N` where N is a number of slide.
+
+    So in the example below it'll be `step-2`.
+
+    The hash part of the url when this step is active will be `#/step-2`.
+
+    You can also use `#step-2` in a link, to point directly to this particular step.
+
+    Please note, that while `#/step-2` (with slash) would also work in a link it's not recommended.
+    Using classic `id`-based links like `#step-2` makes these links usable also in fallback mode.
+
+-->
+<div class="step slide" id="un-poco-de-mi" data-x="0" data-y="-1500">
+    <h1 class="titulo_principal">¿Quien soy?</h1>
+    <img src="img/octobiwan.jpg" class="octobiwan" alt=""/>
+    <ul class="lista_quien_soy">
+        <li>Estudiante de la universidad de Cartagena</li>
+        <li>Aspirante a título de Ingeniero de Sistemas</li>
+        <li>Desarrollador hace más de 2 años</li>
+        <li>Desarrollador de Django aproximadamente 2 años</li>
+        <li>Actualmente desarrollador en <span class="nokia">Nokia</span> Networks</li>
+        <li><b>Newby</b> en Node... pero eso es otra historia... xD</li>
+    </ul>
+    <p class="slide_footnote">Ve la serie Djangonized! de mi autoria en <a class="youtube" href="https://www.youtube.com/playlist?list=PLD_365rSBZFIvB5vNlsWrVmIx-hqGrvE9">Youtube <i class="fa fa-youtube-square"></i></a></p>
+</div>
+
+<div class="step slide" data-x="1000" data-y="-1500">
+    <h1 class="titulo_principal">¿Que es un API Rest?</h1>
+    <img src="img/soap_rest.png" class="octobiwan" alt=""/>
+    <ul class="lista_quien_soy mover_izquierda">
+        <li>Es una técnica de arquitectura de software.</li>
+        <li>Permite la creación de servicios a través de HTTP.</li>
+        <li>REST se definió en el 2000 por Roy Fielding, coautor principal también de la especificación HTTP.</li>
+        <li>Podríamos considerar REST como un framework para construir aplicaciones web respetando HTTP.</li>
+    </ul>
+    <ul class="lista_izquierda">
+        <li>Se basa en recursos y URIs (Identificador de recursos uniformes)</li>
+        <li>Implementa todos los verbos de HTTP para dar semántica a las acciones de API. (GET,POST,PUT,PATCH,DELETE)</li>
+    </ul>
+</div>
+
+<!--
+
+    This is an example of step element being scaled.
+
+    Again, we use a `data-` attribute, this time it's `data-scale="4"`, so it means that this
+    element will be 4 times larger than the others.
+    From presentation and transitions point of view it means, that it will have to be scaled
+    down (4 times) to make it back to its correct size.
+
+-->
+<div class="step" data-x="0" data-y="0" data-scale="2">
+    <span class="try">¿Y como me ayuda</span>
+    <img src="logo.png" alt="logo_drf"/>
+    <span class="footnote">con esto?</span>
+    <span class="footnote2">Primero hay que instalarlo, es sencillo.</span><br/>
+    <span class="code">$ pip install djangorestframework markdown</span>
+</div>
+
+<!--
+
+    This element introduces rotation.
+
+    Notation shouldn't be a surprise. We use `data-rotate="90"` attribute, meaning that this
+    element should be rotated by 90 degrees clockwise.
+
+-->
+<div class="step slide" data-x="850" data-y="4000" data-rotate="90" data-scale="3">
+    <div class="titulo_principal">Django Flow</div>
+    <img class="flow" src="img/Django%20Flow.png" alt=""/>
+    <p class="bottom">Vamos a realizar un viaje a través de un request en Django <span class="red">REST</span> Framework.</p>
+</div>
+
+<div class="step slide" data-x="3800" data-y="2100" data-rotate="180">
+    <div class="titulo_principal">Request Middleware!</div>
+    <br/>
+    <p>
+        <span class="quote">“</span>Si estas realizando RESTfull API's, no solo debes usar request.POST<span class="quote">”</span>
+        <span class="autor">— Malcom Tredinnick, </span><span class="work">Django developers group</span>
+    </p>
+    <br/>
+    Request Parsing
+    <br/>
+    <p class="info">request.data = request.POST... request.PUT... request.PATCH...</p>
+    <p class="info">request.query_params = request.GET</p>
+    Content Negotiation
+    <br/>
+    <p class="info">.accepted_media_type = Negociación con el cliente de que tipo de contenido sera retornado</p>
+    <p class="info">.accepted_renderer = Resultado de negociación, dictamina que parser utilizará <span class="red">DRF</span></p>
+    Autenticación
+    <br/>
+    <p class="info">request.user = Usuario de Django conectado (Incluyendo AnonymousUser)</p>
+    <p class="info">request.auth = Varia segun el resultado según el método de autenticación (Token, OAUTH, OAUTH2)</p>
+
+</div>
+
+<!--
+
+    And now it gets really exciting! We move into third dimension!
+
+    Along with `data-x` and `data-y`, you can define the position on third (Z) axis, with
+    `data-z`. In the example below we use `data-z="-3000"` meaning that element should be
+    positioned far away from us (by 3000px).
+
+-->
+<div class="step slide" data-x="4000" data-y="4000" data-rotate="300" data-scale="1">
+    <div class="titulo_principal">URLs!</div>
+    <br/>
+    Reglas de URLS
+    <br/>
+    <br/>
+    <p class="info">1 URL(URI) Representa 1 recurso</p>
+    <p class="info">1 URL debe especificar el recurso antes que el verbo a realizar</p>
+    <p class="info">La definición de la acción de la URL no debe ser especificada por la URL
+        (a menos que este por fuera de las acciones de un RESTFull API).</p>
+    <br/>
+    <div class="mitad mitad-left">
+        <h2>URL Invalidas</h2>
+        <ul class="urls">
+            <li>http://localhost/crear/prestamo/</li>
+            <li>http://localhost/modificar/prestamo/</li>
+            <li>http://localhost/eliminar/prestamo/</li>
+            <li>http://localhost/listar/prestamo/</li>
+            <li>http://localhost/prestamo/?id=22</li>
+        </ul>
+    </div>
+    <div class="mitad mitad-right">
+        <h2>URL Validas</h2>
+        <ul class="urls">
+            <li>http://localhost/prestamo/ Petición POST (Crear)</li>
+            <li>http://localhost/prestamo/id/ Petición PUT/PATCH (Actualizar)</li>
+            <li>http://localhost/prestamo/id/ Petición DELETE (Eliminar)</li>
+            <li>http://localhost/prestamo/ petición GET (listar)</li>
+            <li>http://localhost/prestamo/id/ petición GET (obtener objeto)</li>
+        </ul>
+    </div>
+</div>
+
+<!--
+
+    This step here doesn't introduce anything new when it comes to data attributes, but you
+    should notice in the demo that some words of this text are being animated.
+    It's a very basíc CSS transition that is applied to the elements when this step element is
+    reached.
+
+    At the very beginning of the presentation all step elements are given the class of `future`.
+    It means that they haven't been visited yet.
+
+    When the presentation moves to given step `future` is changed to `present` class name.
+    That's how animation on this step works - text moves when the step has `present` class.
+
+    Finally when the step is left the `present` class is removed from the element and `past`
+    class is added.
+
+    So basícally every step element has one of three classes: `future`, `present` and `past`.
+    Only one current step has the `present` class.
+
+-->
+<div class="step slide" data-x="4000" data-y="-1000" data-rotate="270" data-scale="2">
+    <div class="titulo_principal"> Views! (Decorator)</div>
+    <br/>
+    <p>
+        <span class="quote">“</span>Decir [que las Class based views] son siempre la solución mas óptima es un error<span class="quote">”</span>
+        <span class="autor">— Nick Coghlan</span>
+    </p>
+    <p class="info"> @api_view()</p>
+    <br/>
+    <img src="img/decorator_simple.png" alt=""/>
+    <br/>
+    <img src="img/decorator_method.png" alt=""/>
+    <br/>
+    <img src="img/decorator_methods.png" alt=""/>
+</div>
+
+<div  class="step slide" data-x="8500" data-y="-1500" data-scale="2">
+    <div class="titulo_principal"> Views! (CBV)</div>
+    <br/>
+    <p class="info">Class Based Views</p>
+    <img src="img/cbvs.png" alt=""/>
+    <p class="info">
+        Si no existe ninguna función con el nombre del método del request.
+        El framework responderá con un 403 Forbidden.
+    </p>
+</div>
+
+<div class="step slide" data-x="8300" data-y="2000" data-rotate="20" data-scale="4">
+    <div class="titulo_principal">API Browser</div>
+    <br/>
+    <p class="info">Cualquiera de las 2 formas de view anteriores generarán el siguiente
+        resultado en el browser gracias al API-Browser out of the box que trae <span class="red">DRF</span></p>
+    <img class="browser" src="img/browserapi.png" alt=""/>
+</div>
+
+<div class="step slide" data-x="6000" data-y="4000" data-scale="2">
+    <div class="titulo_principal">Serializers</div>
+    <br/>
+    <p class="info">¿Como trabajar con la información dentro de <span class="red">DRF</span>?</p>
+    <p class="info">¡Serializers y ModelSerializers!</p>
+    <br/>
+    <div class="mitad mitad-left">
+        <h2>Serializer</h2>
+        <br/>
+        <img src="img/Serializer.png" alt=""/>
+        <img src="img/serializing_objects.png" alt=""/>
+    </div>
+
+</div>
+
+<!--
+
+    And the last one shows full power and flexibility of impress.js.
+
+    You can not only position element in 3D, but also rotate it around any axis.
+    So this one here will get rotated by -40 degrees (40 degrees anticlockwise) around X axis and
+    10 degrees (clockwise) around Y axis.
+
+    You can of course rotate it around Z axis with `data-rotate-z` - it has exactly the same effect
+    as `data-rotate` (these two are basícally aliases).
+
+-->
+<div class="step slide" data-x="6200" data-y="4300" data-z="-2000" data-rotate-x="-40" data-rotate-y="10" data-scale="2">
+    <div class="titulo_principal">ModelSerializer</div>
+    <br/>
+    <p class="info">Listo pero django no trabaja objetos como tal, trabaja con models.Model, ¿que hago?</p>
+    <p class="info">Sencillo, recuerdas los ModelForms?... aca se trabajo algo parecido, los ModelSerializer</p>
+
+    <p class="info">models.py</p>
+    <img src="img/models.png" alt=""/>
+    <p class="info">serializers.py</p>
+    <img src="img/model_serializers.png" alt=""/>
+    <p class="info">Salida : </p>
+    <img src="img/output1.png" width="60%" alt=""/>
+</div>
+
+<div class="step slide" data-x="8200" data-y="4300" data-z="-2000" data-rotate-x="-40" data-rotate-y="10" data-scale="2">
+    <div class="titulo_principal">ModelSerializer (Campos)</div>
+    <br/>
+    <p class="info">Ahora, ¿como puedo decir que campos voy a mostrar con el serializador?</p>
+    <p class="info">así como he dicho... ModelForms = ModelSerializer entonces usa el atributo fields</p>
+
+    <p class="info">models.py</p>
+    <img src="img/models.png" alt=""/>
+    <p class="info">serializers.py</p>
+    <img src="img/model_serializer_fields.png" alt=""/>
+    <p class="info">Salida : </p>
+    <img src="img/output2.png" width="60%" alt=""/>
+</div>
+
+<div class="step slide" data-x="6200" data-y="6200" data-z="-3000" data-rotate="-30">
+    <div class="titulo_principal">Viewset (Views 2.0)</div>
+    <br/>
+    <p class="info">Nos ayudan con patrones repetitivos en nuestras apps</p>
+    <p class="info">Por ejemplo realizar vistas de CRUD (Create, Read, Update y Delete)</p>
+    <p class="info">Ayuda a organizar el código de manera mas semántica</p>
+    <div class="mitad mitad-left">
+        <br/>
+        <img src="img/viewset.png" alt=""/>
+        <img src="img/urls_viewset.png" alt=""/>
+    </div>
+</div>
+
+<div class="step slide" data-x="5200" data-y="5200" data-z="-3000" data-rotate="-30">
+    <div class="titulo_principal">ModelViewSet (Views 2.0)</div>
+    <br/>
+    <p class="info">Excelente... entonces ya puedo construir muy rápido un API</p>
+    <p class="info">Si, y si te dijera que puedes hacerlo... aún mas rápido :)</p>
+    <p class="info">Utilizando ModelViewSets :O</p>
+    <div class="mitad mitad-left">
+        <br/>
+        <img src="img/modelviewset.png" alt=""/>
+    </div>
+    <p class="info" style=" width: 80%; position: absolute; bottom:300px;">así solo nos concentraremos en métodos por fuera
+    del CRUD de los modelos :D ¿no es genial? y como hacemos eso... con un decorador :)</p>
+    <div class="mitad mitad-left" style="bottom: 40px">
+        <br/>
+        <img src="img/detail_route.png" alt=""/>
+        <img src="img/list_route.png" alt=""/>
+    </div>
+</div>
+
+<div class="step slide" data-x="7200" data-y="5200" data-z="-3000" data-rotate="-30">
+    <div class="titulo_principal">Routers (Urls 2.0)</div>
+    <br/>
+    <p class="info">¿Debo mapear entonces cada Viewset con su respectiva acción y método?</p>
+    <p class="info"><b>No</b>, para eso entonces utilizamos routers :)</p>
+    <p class="info">Patrones que ya <span class="red">DRF</span> ha programado por nosotros :)</p>
+    <div class="mitad mitad-left">
+        <br/>
+        <img src="img/routers.png" alt=""/>
+    </div>
+    <p class="info" style=" width: 80%; position: absolute; bottom:100px;">Esto generará las URLs según cuales sean los métodos
+        definidos en el viewset (create, retrieve, update, partial_update, list y destroy)
+        y sus métodos (post, get con pk, put, patch, get y delete)</p>
+</div>
+
+<div class="step slide" data-x="7200" data-y="6200" data-z="-3000" data-rotate="-30">
+    <div class="titulo_principal">Permisos!</div>
+    <br/>
+    <p class="info">Con el uso de CBV o de decoradores puedes agregar permisos a cada vista en <span class="red">DRF</span></p>
+    <p class="info">En la CBV puedes reescribir permission_classes, ejemplo => (permissions.IsAdminUser,)</p>
+    <p class="info">o puedes utilizar el decorator @permission_classes ejemplo @permission_classes(permission_classes=(permissions.IsAuthenticated,))</p>
+    <br/>
+    <img src="img/permissions_cbv.png" alt=""/>
+
+</div>
+
+<div class="step slide" data-x="7200" data-y="7200" data-z="-3000" data-rotate="-30">
+    <div class="titulo_principal">¿Y como creo mis permisos?</div>
+    <br/>
+    <p class="info">Como casi todo en <span class="red">DRF</span> y en python puedes (re)escribir las clases segun tu antojo</p>
+    <p class="info">Y casi todas las clases de <span class="red">DRF</span> se componen/heredan de mixins o un Base</p>
+    <p class="info">así que si quisieras reescribir o crear un permiso solo debes heredar de BasePermission ¡así de facil!</p>
+    <br/>
+    <img src="img/custom_permission.png" alt=""/>
+
+</div>
+
+
+<div class="step slide" data-x="9200" data-y="7200" data-z="-5000" data-rotate="-30">
+    <div class="titulo_principal">Autenticación</div>
+    <br/>
+    <p class="info">Y como sabe <span class="red">DRF</span> quien esta conectado.</p>
+    <p class="info"><span class="red">DRF</span> tiene sus propios métodos de autenticar un usuario además de los estandares de <span class="django">Django</span></p>
+    <p class="info">El mas sencillo de utilizar es Session que se maneja por cookies y que no necesita mucho para usarse. ¿como?...</p>
+    <p class="info">Sencillo en realidad no debes hacer nada, utiliza el sistema de <span class="django">Django</span> a través de cookies en las secciones AJAX</p>
+    <br/>
+    <p class="info">¿No es genial?</p> <span style="color: blue; font-size: 1.2em; margin-left:70px;">¡Excelente!</span>
+    <img src="img/mr-burns.jpg" class="burns" alt=""/>
+</div>
+
+<div class="step slide" data-x="9200" data-y="8200" data-z="-5000" data-rotate="-30">
+    <div class="titulo_principal">Autenticación por Token</div>
+    <br/>
+    <p class="info">¿Y si no es un browser quien esta del otro lado?</p>
+    <p class="info"><span class="red">DRF</span> Tambien puede autenticar por (Token, Oauth y Oauth2, ademas de otras "pluggables")</p>
+    <p class="info">Y hoy les enseñare a utilizar Token Auth... es sencillo...</p>
+    <p class="info">1.) coloca rest_framework.authtoken en tus INSTALLED_APPS y corre un manage.py migrate</p>
+    <img src="img/installed_apps.png" alt=""/>
+    <p class="info">2.) Habilita la URL de autenticación en tus urls.py</p>
+    <img src="img/url_token.png" alt=""/>
+
+</div>
+
+<div class="step slide" data-x="9200" data-y="9200" data-z="-6000" data-rotate="-30">
+    <div class="titulo_principal">Autenticación por Token</div>
+    <br/>
+    <p class="info">3.) Has que tu dispositivo haga un método POST a esta url enviando en tu formato (en caso de no definirlo es json)
+        con las key username y password a esa url, y esta retornará un token en json así {"token":"6784d46f1e6760286e80be63c74cb7xxxxxxxxxx"}.
+        (Token de ejemplo)
+    </p>
+    <p class="info"> Recuerda enviar todas tus peticiones con el Content-Type de la cabecera HTTP correcto, en este caso (JSON)
+    usaríamos Content-Type : applicaiton/json</p>
+    <p class="info">4.) Luego para todas las peticiones puedes modificar la cabecera HTTP con el flag Authorization : Token 6784d46f1e6760286e80be63c74cb7xxxxxxxxxx  y listo</p>
+
+    <p class="info">Es importante el la palabra Token (primera en mayuscula) luego espacio y luego el token que nos ha otorgado Django para el usuario</p>
+    <img src="img/drftoken.png" style="width: 100%" alt=""/>
+
+
+
+</div>
+
+<div class="step slide" data-x="10200" data-y="10200"  data-rotate="0">
+    <div class="titulo_principal">¡Y muchas cosas mas por aprender!</div>
+    <br/>
+    <p class="info">y aun quedan temas por tocar, que por tiempo ya no puedo tocar, pero que son muy interesantes</p>
+    <p class="info">Pero con esta introducción (creo que un poco mas que eso)... ya pueden crear APIs de manera
+    rapida y facil con <span class="red">DRF</span></p>
+    <p class="info">Paginaciones, filtros y otras cosas mas quedan por ver, pero aseguro que son tan faciles
+    y tan customizables como los permisos :D</p>
+
+    <p class="info">Espero esto les sirva de mucho de ahora en adelante... ¡Django Rules! Muchas Gracias...</p>
+    <img src="img/privateinvestocat.jpg" style="width: 30%; position: relative; left:48%;"  alt=""/>
+    <p class="django" style="position: absolute; bottom: 30px; font-size: 0.8em">Buscame si necesitas mas ayuda...</p>
+    <ul class="social">
+        <li style="color:rgb(58, 87, 149);"><i class="fa fa-facebook"></i> <a href="https://facebook.com/minrock">http://facebook.com/minrock</a></li>
+        <li style="color: #55acee;"><i class="fa fa-twitter"></i> <a href="https://twitter.com/minrockx">@Minrock</a></li>
+        <li class="youtube"><i class="fa fa-youtube"></i> <a href="https://www.youtube.com/channel/UCvvoFT9Y_ezPGfvAa5DDmEw">Luis Moncaris</a></li>
+        <li><i class="fa fa-github"></i> <a href="https://github.com/minrock">Minrock</a></li>
+    </ul>
+</div>
+
+
+
+
+</div>
+
+<!--
+    
+    Hint is not related to impress.js in any way.
+    
+    But it can show you how to use impress.js features in creative way.
+    
+    When the presentation step is shown (selected) its element gets the class of "active" and the body element
+    gets the class based on active step id `impress-on-ID` (where ID is the step's id)... It may not be
+    so clear because of all these "ids" in previous sentence, so for example when the first step (the one with
+    the id of `bored`) is active, body element gets a class of `impress-on-bored`.
+    
+    This class is used by this hint below. Check CSS file to see how it's shown with delayed CSS animation when
+    the first step of presentation is visible for a couple of seconds.
+    
+    ...
+    
+    And when it comes to this piece of JavaScript below ... kids, don't do this at home ;)
+    It's just a quick and dirty workaround to get different hint text for touch devices.
+    In a real world it should be at least placed in separate JS file ... and the touch content should be
+    probably just hidden somewhere in HTML - not hard-coded in the script.
+    
+    Just sayin' ;)
+    
+-->
+<div class="hint">
+    <p>Usa la barra espaciadora o las direccionales para navegar la presentación</p>
+</div>
+<script>
+    if ("ontouchstart" in document.documentElement) {
+        document.querySelector(".hint").innerHTML = "<p>Toca la esquina Izquierda/deracha para navegar</p>";
+    }
+</script>
+
+<!--
+    
+    Last, but not least.
+    
+    To make all described above really work, you need to include impress.js in the page.
+    I strongly encourage to minify it first.
+    
+    In here I just include full source of the script to make it more readable.
+    
+    You also need to call a `impress().init()` function to initialize impress.js presentation.
+    And you should do it in the end of your document. Not only because it's a good practice, but also
+    because it should be done when the whole document is ready.
+    Of course you can wrap it in any kind of "DOM ready" event, but I was too lazy to do so ;)
+    
+-->
+<script src="js/impress.js"></script>
+<script>impress().init();</script>
+
+<!--
+    
+    The `impress()` function also gives you access to the API that controls the presentation.
+    
+    Just store the result of the call:
+    
+        var api = impress();
+    
+    and you will get three functions you can call:
+    
+        `api.init()` - initializes the presentation,
+        `api.next()` - moves to next step of the presentation,
+        `api.prev()` - moves to previous step of the presentation,
+        `api.goto( idx | id | element, [duration] )` - moves the presentation to the step given by its index number
+                id or the DOM element; second parameter can be used to define duration of the transition in ms,
+                but it's optional - if not provided default transition duration for the presentation will be used.
+    
+    You can also simply call `impress()` again to get the API, so `impress().next()` is also allowed.
+    Don't worry, it wont initialize the presentation again.
+    
+    For some example uses of this API check the last part of the source of impress.js where the API
+    is used in event handlers.
+    
+-->
+
+</body>
+</html>
+
+<!--
+    
+    Now you know more or less everything you need to build your first impress.js presentation, but before
+    you start...
+    
+    Oh, you've already cloned the code from GitHub?
+    
+    You have it open in text editor?
+    
+    Stop right there!
+    
+    That's not how you create awesome presentations. This is only a code. Implementation of the idea that
+    first needs to grow in your mind.
+    
+    So if you want to build great presentation take a pencil and piece of paper. And turn off the computer.
+    
+    Sketch, draw and write. Brainstorm your ideas on a paper. Try to build a mind-map of what you'd like
+    to present. It will get you closer and closer to the layout you'll build later with impress.js.
+    
+    Get back to the code only when you have your presentation ready on a paper. It doesn't make sense to do
+    it earlier, because you'll only waste your time fighting with positioning of useless points.
+    
+    If you think I'm crazy, please put your hands on a book called "Presentation Zen". It's all about 
+    creating awesome and engaging presentations.
+    
+    Think about it. 'Cause impress.js may not help you, if you have nothing interesting to say.
+    
+-->
+
+<!--
+    
+    Are you still reading this?
+    
+    For real?
+    
+    I'm impressed! Feel free to let me know that you got that far (I'm @bartaz on Twitter), 'cause I'd like
+    to congratulate you personally :)
+    
+    But you don't have to do it now. Take my advice and take some time off. Make yourself a cup of coffee, tea,
+    or anything you like to drink. And raise a glass for me ;)
+    
+    Cheers!
+    
+-->
+
